@@ -1,0 +1,172 @@
+<div class="row pt-2 mt-5">
+        <div *ngIf="this.commonService.user_Id != ''" class="col-12 p-5 m-auto bg-white shadow shadow-md rounded"
+                style="max-width: 95%;">
+                <app-home-rx *ngIf="commonService.reconVal === '2'"></app-home-rx>
+                <form [formGroup]="homeForm" class="col-12" *ngIf="commonService.reconVal === '1'">                  
+                        <div *ngIf="userRole === 'ANALYST'" class="col-12 pt-8"
+                                style="display: block;">
+                                <p class="font-weight-bold heading"> Analyze</p>
+                        </div>
+                        <div *ngIf="userRole === 'ANALYST'" class="col-12"
+                                style="display: block;margin-top: 16px">
+                                <div class="form-group col-3 " style="margin-left: 35%;">
+                                        <label for="client">Client:</label>
+                                        <select name="client" id="client" class="form-control"
+                                                (change)="getContractVal($event)">
+                                                <option selected value="" disabled>Select</option>
+                                                <option *ngFor="let client of clientList" [value]="client">
+                                                        {{client}}</option>
+                                        </select>
+                                </div>
+                        </div>
+                        <div *ngIf="userRole === 'ANALYST'" class="row pt-6"
+                                style="margin-top: 50px;">
+                                <div *ngIf="pieChartData.length>0" class="col-6 text-center">
+                                        <label>Disc. Resolution %</label>
+                                        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+                                                [chartType]="pieChartType"></canvas>
+                                </div>
+                                <div *ngIf="pieChartData1.length>0" class="col-6 text-center">
+                                        <label>% of Unresolved Disc. by Type</label>
+                                        <canvas baseChart [data]="pieChartData1" [labels]="pieChartLabels1"
+                                                [options]="options" [chartType]="pieChartType"></canvas>
+                                </div>
+                        </div>
+                        <div *ngIf="userRole === 'ANALYST' && pieChartData2.length>0"
+                                class="row pt-6">
+                                <div class="col-6 text-center" style="margin-top: 50px; margin-left: 25%;">
+                                        <label>% Resolution by Process</label>
+                                        <canvas baseChart [data]="pieChartData2" [labels]="pieChartLabels2"
+                                                [chartType]="pieChartType1"></canvas>
+                                </div>
+                        </div>
+                        <div *ngIf="userRole === 'ANALYST' && rowdataRes.length>0"
+                                class="col-12 pt-3 row" style="margin-bottom:2rem">
+                                <div class=" p-0">
+                                        <p style="font-size: x-large;font-weight: 617;margin-bottom: 2rem"> Discrepancy
+                                                Resolution by Type</p>
+                                        <ag-grid-angular style="height: 200px; width: 54rem;" class="ag-theme-balham"
+                                                #agGridResolution [enableCellTextSelection]="true"
+                                                [rowData]="rowdataRes" [columnDefs]="columnDefsRes"> </ag-grid-angular>
+                                </div>
+                                <div class="ml-3 pt-6" style="margin-top: 246px;cursor: pointer;">
+                                        <i class="fa fa-download" aria-hidden="true"
+                                                (click)="exportToExcel('Disc_Res_By_Type')"></i>
+                                </div>
+                        </div>
+                        <div class="row"
+                                *ngIf="userRole === 'MANAGER'|| userRole === 'PROCESSOR' || userRole === 'ANALYST'">
+                                <div *ngIf="userRole === 'ANALYST'"
+                                        class="col-12 pt-8" style="display: block;">
+                                        <p class="font-weight-bold heading">Manage</p>
+                                </div>
+                                <div *ngIf="userRole === 'ANALYST'"
+                                        class="col-12 pt-8" style="display: block;margin-top: 16px">
+                                        <p style="font-size: x-large;font-weight: 617"> Disc. Trend by Report Month</p>
+                                </div>
+                                <div *ngIf="userRole === 'MANAGER'"
+                                        class="col-12 pt-8" style="display: block">
+                                        <p class="font-weight-bold heading"> Disc. Trend by Report month</p>
+                                </div>
+                                <div *ngIf="userRole === 'PROCESSOR'"
+                                        class="col-12 pt-8" style="display: block">
+                                        <p class="font-weight-bold heading"> Disc. Trend by Report month</p>
+                                </div>
+                                <div class="col-6 pt-8" style="display: block;">
+                                        <canvas style="margin-top: 50px;" baseChart [chartType]="'bar'"
+                                                [datasets]="chartData" [labels]="labels" [options]="chartOptions"
+                                                [legend]="true" [colors]="colors">
+                                        </canvas>
+                                </div>
+                                <div class=" pt-8" style="display: block;">
+                                        <ag-grid-angular #agGridReport
+                                                style="height: 210px; margin-top:55px; width:24rem"
+                                                class="ag-theme-balham" [enableCellTextSelection]="true"
+                                                [rowData]="rowDataReport" [columnDefs]="columnDefsReport">
+                                        </ag-grid-angular>
+                                </div>
+                                <div class="col-1 pt-10" style="margin-top: 246px;cursor: pointer;">
+                                        <i class="fa fa-download" aria-hidden="true"
+                                                (click)="exportToExcel('Disc_Trend_Month')"></i>
+                                </div>
+                                <div class="col-12" *ngIf="userRole === 'PROCESSOR'">
+                                        <p class="font-weight-bold heading">Processor Assignment Dashboard</p>
+                                        <div class="form-group pt-4 col-3">
+                                                <label for="reportMonth">Report Month:</label>
+                                                <select name="reportMonth" id="reportMonth" class="form-control"
+                                                        formControlName="reportMonth"
+                                                        (change)="filterProcessorList($event)">
+                                                        <option selected value=''>Select</option>
+                                                        <option *ngFor="let reportMonth of monthList"
+                                                                [value]="reportMonth">
+                                                                {{reportMonth}}</option>
+                                                </select>
+                                        </div>
+                                        <div class="row">
+                                                <ag-grid-angular #agGridProcessorAssign
+                                                        style="height: 200px;width:47rem" class="ag-theme-balham ml-3"
+                                                        [rowData]="rowData" [columnDefs]="columnDefsProc"
+                                                        [enableCellTextSelection]="true"> </ag-grid-angular>
+
+                                                <div class="col-1 pt-4" style=" margin-top: 157px; cursor: pointer;">
+                                                        <i class="fa fa-download" aria-hidden="true"
+                                                                (click)="exportToExcel('Processor_Assignment')"></i>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="col-12 pt-8"
+                                        *ngIf="userRole === 'MANAGER' || userRole === 'ANALYST'">
+                                        <p *ngIf="userRole === 'MANAGER'"
+                                                class="font-weight-bold heading">Manager Assignment Dashboard</p>
+                                        <p *ngIf="userRole === 'ANALYST'" class="mt-5"
+                                                style="font-size: x-large;font-weight: 617">Discrepency Trend by Type
+                                        </p>
+                                        <div class="form-group pt-4" style="padding-left:-15px">
+                                                <label for="reportMonth">Report Month:</label>
+                                                <select name="reportMonth" id="reportMonth" class="col-3 form-control"
+                                                        formControlName="reportMonth"
+                                                        (change)="filterProcessorList($event)">
+                                                        <option selected>Select</option>
+                                                        <option *ngFor="let reportMonth of monthList"
+                                                                [value]="reportMonth">
+                                                                {{reportMonth}}</option>
+                                                </select>
+                                        </div>
+                                </div>
+                                <div class="ml-3 pt-8" style="display: block;"
+                                        *ngIf="userRole === 'MANAGER' || userRole === 'ANALYST'">
+                                        <ag-grid-angular #agGridAssign style="height: 200px; width:54rem"
+                                                class="ag-theme-balham" [rowData]="rowData" [columnDefs]="columnDefs"
+                                                [enableCellTextSelection]="true"> </ag-grid-angular>
+                                </div>
+                                <div *ngIf="userRole === 'MANAGER'"
+                                        class="col-1 pt-10" style="margin-top: 184px; cursor: pointer;">
+                                        <i class="fa fa-download" aria-hidden="true"
+                                                (click)="exportToExcel('Manager_Assignment')"></i>
+                                </div>
+                                <div *ngIf="userRole === 'ANALYST'"
+                                        class="col-1 pt-10" style="margin-top: 184px; cursor: pointer;">
+                                        <i class="fa fa-download" aria-hidden="true"
+                                                (click)="exportToExcel('Disc_By_Type')"></i>
+                                </div>
+
+
+                        </div>
+                        <div class="row ">
+                                <div class="ml-3" style="margin-top: 35px; width: 28rem"
+                                        *ngIf="userRole === 'MANAGER'">
+                                        <label>Productivity Dashboard</label>
+                                        <ag-grid-angular #agGridProductivity style="height: 200px; width: 28rem"
+                                                class="ag-theme-balham" [rowData]="rowDataMan"
+                                                [columnDefs]="columnDefsMan" [enableCellTextSelection]="true">
+                                        </ag-grid-angular>
+                                </div>
+                                <div *ngIf="userRole === 'MANAGER'" class="pt-10 ml-2"
+                                        style="margin-top: 251px; cursor: pointer;">
+                                        <i class="fa fa-download" aria-hidden="true"
+                                                (click)="exportToExcel('Manager_Productivity')"></i>
+                                </div>
+                        </div>
+                </form>
+        </div>
+</div>

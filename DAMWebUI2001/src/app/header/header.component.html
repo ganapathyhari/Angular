@@ -1,0 +1,136 @@
+<div class="wrapper bg-light">
+	<nav id="sidebar" class="sidebar">
+		<div class="sidebar-content">
+			<ul class="sidebar-nav">
+				<li *ngIf="menuList[0]" class="sidebar-item active">
+					<a class="sidebar-link" href="/home" routerLink="home" routerLinkActive="custom-active-bg">
+						<i class="align-middle mr-2 fa fa-home"></i> <span class="align-middle">Home</span>
+					</a>
+				</li>
+				<li *ngIf="menuList[8] || menuList[9] || menuList[11]" class="sidebar-item">
+					<a href="#pages" data-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+						<i class="align-middle mr-2 fa fa-pie-chart"></i> <span class="align-middle">Analyst</span>
+					</a>
+					<ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+						<li *ngIf="menuList[8]" class="sidebar-item"><a class="sidebar-link" href="/rule-config"
+								routerLink="rule-config" routerLinkActive="custom-active-bg">Rule Configuration</a></li>
+						<li *ngIf="menuList[9]" class="sidebar-item"><a class="sidebar-link" href="/beq-tracking"
+								routerLink="beq-tracking" routerLinkActive="custom-active-bg">BEQ Tracking</a>
+						</li>
+						<li *ngIf="menuList[11]" class="sidebar-item"><a class="sidebar-link" href="/execute-batch"
+								routerLink="execute-batch" routerLinkActive="custom-active-bg">Execute Batch</a>
+						</li>
+					</ul>
+				</li>
+				<li *ngIf="menuList[3]" class="sidebar-item">
+					<a class="sidebar-link" href="/job-status-log" routerLink="job-status-log"
+						routerLinkActive="custom-active-bg">
+						<i class="align-middle mr-2 fa fa-stack-overflow"></i> <span class="align-middle">Job Status
+							Log</span>
+					</a>
+				</li>
+				<li *ngIf="menuList[5]" class="sidebar-item">
+					<a class="sidebar-link" href="/member-search" routerLink="member-search"
+						routerLinkActive="custom-active-bg">
+						<i class="align-middle mr-2 fa fa-search"></i> <span class="align-middle">Member
+							Search</span>
+					</a>
+				</li>
+				<li *ngIf="menuList[4] ||  menuList[1] || menuList[2] || menuList[12]|| menuList[13]"
+					class="sidebar-item">
+					<a href="#auth" data-toggle="collapse" class="sidebar-link collapsed">
+						<i class="align-middle mr-2 fa fa-user"></i> <span class="align-middle">Manager</span>
+					</a>
+					<ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+						<li *ngIf="menuList[4]" class="sidebar-item"><a class="sidebar-link" href="/assign"
+								routerLink="assign" routerLinkActive="custom-active-bg">Assign</a></li>
+						<li *ngIf="menuList[1]" class="sidebar-item"><a class="sidebar-link" href="/load-recon"
+								routerLink="load-recon" routerLinkActive="custom-active-bg">Load Recon</a></li>
+						<li *ngIf="menuList[2]" class="sidebar-item"><a class="sidebar-link" href="/export-recon"
+								routerLink="export-recon">Export Recon</a></li>
+						<li *ngIf="menuList[13]" class="sidebar-item"><a class="sidebar-link"
+								href="/processor-management" routerLink="processor-management"
+								routerLinkActive="custom-active-bg">Processor Management</a>
+						</li>
+					</ul>
+				</li>
+				<li *ngIf="menuList[6]" class="sidebar-item">
+					<a href="#ui" data-toggle="collapse" class="sidebar-link collapsed">
+						<i class="align-middle mr-2 fa fa-microchip"></i> <span class="align-middle">Processor</span>
+					</a>
+					<ul *ngIf="menuList[6]" id="ui" class="sidebar-dropdown list-unstyled collapse "
+						data-parent="#sidebar">
+						<li class="sidebar-item"><a class="sidebar-link" href="/my-queue" routerLink="my-queue"
+								routerLinkActive="custom-active-bg">My Queue</a></li>
+					</ul>
+				</li>
+				<li *ngIf="menuList[10]" class="sidebar-item">
+					<a class="sidebar-link" (click)="onNavigate()">
+						<i class="align-middle mr-2 fa fa-file"></i> <span class="align-middle">Reports</span>
+					</a>
+				</li>
+				<li *ngIf="menuList[7]" class="sidebar-item">
+					<a class="sidebar-link" href="/admin" routerLink="admin" routerLinkActive="custom-active-bg">
+						<i class="align-middle mr-2 fa fa-user-circle-o"></i> <span class="align-middle">Admin</span>
+					</a>
+				</li>
+				<li class="sidebar-item">
+					<a class="sidebar-link" href="/home" routerLink="home" routerLinkActive="custom-active-bg">
+						<i class="align-middle mr-2 fa fa-sign-out"></i> <span class="align-middle">Logout</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div id="header" class="main">
+		<nav class="navbar navbar-expand navbar-theme">
+			<a class="d-flex hamburger">
+				<i class="fa fa-bars align-self-center" style="color:white;" (click)="openCloseNav()"></i>
+			</a>
+			<img class="cts-logo" src="./assets/bg/cogzlogo-new.svg" />
+			<p class="seperator text-green"> | </p>
+			<div class="navbar-collapse collapse" style="display: block !important;">
+				<p class="header-title text-green"> Discrepancy Analysis & Management</p>
+			</div>
+			<div class="text-shadow" style="color: white;text-align:center; margin-top: 3px;">
+				<div class="font-weight-bold"><i class="fa fa-user" aria-hidden="true"></i> {{commonService.user_Name}}
+				</div>
+				<small>{{commonService.user_Role}}</small>				
+				  <div class="custom-control custom-switch" style="color: white;" *ngIf="router.url === '/home' || router.url === '/rule-config'" >
+					<label style =" font-size: 14px; margin-left: -40px;" >ATTEST</label>
+					<input type="checkbox" class="custom-control-input" style= "margin-top:1px ;" (change)= "onChange()" name ="reconToogle" id="customSwitches">
+					<label class="custom-control-label" for="customSwitches"  style =" font-size: 10px; margin-left: 42px;" ></label>
+					<label style =" font-size: 14px;" >4RX</label>
+				  
+				  </div>
+			</div>
+			<!-- <div class="switch">
+				<label>
+				  Off
+				  <input type="checkbox">
+				  <span class="lever"></span> On
+				</label>
+			  </div> -->
+			  
+
+		</nav>
+
+		<main class="content bg-light" id="main">
+			<div class="container-fluid" id="container">
+				<router-outlet></router-outlet>
+			</div>
+		</main>
+		<footer class="footer fixed">
+			<div class="container-fluid">
+				<div class="row text-muted">
+					<div class="col-4  m-auto">
+						<p class="mb-0">
+							&copy; 2019 Cognizant. All Rights Reserved
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+</div>

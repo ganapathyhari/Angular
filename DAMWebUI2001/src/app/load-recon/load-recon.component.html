@@ -1,0 +1,58 @@
+<div class="col-12 row ">
+    <div class="col-1"></div>
+    <div class="col-12 row pt-5 m-auto" style="max-width: 95%">
+        <div class="col-12">
+            <form [formGroup]="loadReconForm" class="col-12">
+
+                <div class="col-12 row bg-white p-4 shadow shadow-md rounded">
+                    <p class="font-weight-bold heading col-12 pl-0 ml-3">Load Reconciliation</p>
+
+                  
+                        <div class="form-group col-12 pt-3 row ">
+                                <div *ngIf="errList.length != 0" class="form-group col-12  ">
+                                        <p style="color: red" *ngFor="let err of errList" >{{err}}
+                                        </p></div>                               
+                            <div *ngIf="!isLoad" class="form-group col-3">
+                                <label for="userId">Report Month:</label>
+                                <input type="text" placeholder="YYYY-MM" name="reportMonth" id="reportMonth" 
+                                class="form-control" [disabled]=false
+                                formControlName="reportMonth" (keypress)="validateVal($event)"
+                                (keyup)="reportFormatter($event)" maxlength="7"  >                               
+                            </div>                    
+    
+                        </div> 
+
+                    <div class="form-group col-12 pt-8 row" style=" margin-left: 1px;">
+                        <p class="font-weight-bold ml-2">{{fileText}}</p>
+                        <p *ngIf="fileText ===''" class="font-weight-bold">Get File Path here</p>
+                    </div>
+                    <div class="form-group col-12 row" style=" margin-left: 1px;">
+                        <p  *ngIf="fileText !==''" class="font-weight-bold ml-2">{{fileNameFormat}}</p>
+                    </div>
+                    
+                    <div class="form-group col-12 pt-2">
+                        <button *ngIf="isLoad" class="btn btn-green mr-5 ml-5" (click)="getPath()">Request for Upload</button>
+                        <button *ngIf="!isLoad" class="btn btn-green mr-5 ml-5" (click)="loadFile()">Upload File</button>
+                        <button class="btn btn-green ml-4" (click)="cancel()">Cancel</button>
+                    </div>
+                    <div id="spinnerCust" *ngIf="loader">
+                        <div class="spinner-border text-muted" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="spinnerCust" *ngIf="commonService.fileLoad">
+                        <div class="spinner-border text-muted" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </form>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>
+

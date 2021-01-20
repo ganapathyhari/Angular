@@ -1,0 +1,15 @@
+@import "src/assets/scss/common.scss";
+::ng-deep{
+    .ag-theme-balham .ag-header-cell-label .ag-header-cell-text {
+        text-overflow: clip;
+        overflow: visible;
+        white-space: normal !important;
+        line-height: 1rem;
+    }
+    .ag-theme-balham .ag-header {
+        height: 2.6rem !important;
+    }
+  
+
+    
+    }

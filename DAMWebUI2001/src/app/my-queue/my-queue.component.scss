@@ -1,0 +1,19 @@
+::ng-deep{
+    .ag-theme-balham .ag-header-row:first-child {
+    background-color: #003aa1;
+    color: white;
+}
+}
+
+.btn-primary{
+    background-color: black;
+    border-color:  black;
+    min-width: 125px;
+}
+
+.fake-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+

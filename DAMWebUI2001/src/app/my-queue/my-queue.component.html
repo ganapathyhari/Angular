@@ -1,0 +1,39 @@
+<div class="col-12 row">
+    <div class="col-12 pt-5 m-auto">
+        <div class="rounded bg-white p-4 shadow shadow-md">
+
+            <form [formGroup]="queueForm" class="row">
+                <div class="form-group col-12 row" style="align-items: flex-end;">
+                    <p class="font-weight-bold heading col-12 pl-0 ml-3">Processor Discrepancy List</p>
+                    <div class="form-group col-3 pt-5">
+                        <label for="recon">Reconciliation Type</label>
+                        <select type="text" name="recon" id="recon" class="form-control" formControlName="recon"
+                            (change)="getReconData()">
+                            <option value="" disabled>Select</option>
+                            <option *ngFor="let rtype of reconType" [value]="rtype.recon_Id">{{rtype.recon_Name}}
+                            </option>
+                        </select>
+                    </div>
+                   
+                </div>
+            </form>
+            <div id="spinnerCust" *ngIf="loader">
+                <div class="spinner-border text-muted" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="col-12 pt-3 row" *ngIf="showGrid">
+                <div class="col-11 p-0">                    
+                    <ag-grid-angular #agGrid style="height: 400px;" class="ag-theme-balham" [rowData]="rowData"
+                        [columnDefs]="columnDefs" [defaultColDef]="defaultColumnDef" [floatingFilter]="true"
+                        rowSelection="single" (click)="getSelectedRows($event)" [enableCellTextSelection]="true">
+                    </ag-grid-angular>
+                    
+                </div>
+                <div class="col-1" style="margin-top: 381px;cursor: pointer;">
+                    <i class="fa fa-download" aria-hidden="true" (click)="exportToExcel()"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="modal-parent">
+    <div class="modal-header text-white">
+         <i  class="close"  (click)="modal.dismiss('Cross click')" >&times;</i>
+      </div>
+      <div class="modal-body">
+        <p><strong>Are you sure you want to delete?</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-green" (click)="modal.dismiss('cancel click')">Cancel</button>
+        <button type="button" class="btn-green" (click)="onCloseModal($event)">Ok</button>
+      </div>
+    </div>

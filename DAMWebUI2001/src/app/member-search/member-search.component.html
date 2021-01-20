@@ -1,0 +1,107 @@
+<div class="col-12 row">
+    <div class="col-12 pt-5 m-auto">
+        <div class="rounded bg-white p-4 shadow shadow-md">
+
+            <form [formGroup]="memberSearchForm" class="row">
+                <div class="form-group col-12 row" style="align-items: flex-end;">
+                    <p class="font-weight-bold heading col-12 pl-0 ml-3">Member Search</p>
+                    <div class="form-group col-12 pt-4 row">
+                        <div *ngIf="errList.length != 0" class="form-group col-12">
+                            <p style="color: red" *ngFor="let err of errList">{{err}}
+                            </p>
+                        </div>
+                        <!-- <div class="form-group col-3">
+                                <label for="reconcilation">Reconciliation Type</label>
+                                <select type="text" name="reconcilation" id="reconcilation" class="form-control"
+                                    formControlName="reconcilation" (change)="disableClientContr()">
+                                    <option value="" disabled>Select</option>
+                                    <option *ngFor="let rtype of reconType" [value]="rtype.recon_Id">{{rtype.recon_Name}}
+                                    </option>
+                                </select>
+                            </div> -->
+                        <div class="form-group col-3">
+                            <label for="client">Client:</label>
+                            <select name="client" id="client" class="form-control" formControlName="client"
+                                (change)="getContractVal($event)">
+                                <option selected value="" disabled>Select</option>
+                                <option *ngFor="let client of clientList" [value]="client">
+                                    {{client}}</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="contract">Contract:</label>
+                            <select name="contract" id="contract" class="form-control" formControlName="contract"
+                                [attr.disabled]="contractBool ? '' : null">
+                                <option selected value="" disabled>Select</option>
+                                <option *ngFor="let contract of contractList" [value]="contract">
+                                    {{contract}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="reportMonth">Report Month:</label>
+                            <input type="text" name="reportMonth" id="reportMonth" class="form-control" autocomplete="off"
+                                formControlName="reportMonth" (keypress)="validateVal($event)" placeholder="YYYY-MM"
+                                maxlength="7" (keyup)="dobAddFormatter($event,'reportMonth')" >
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="mbi">MBI:</label>
+                            <input type="text" name="mbi" id="mbi" class="form-control" maxlength="12" autocomplete="off"
+                                formControlName="mbi" (keypress)="isAlphaNumeric($event)">
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="subId">Sub ID:</label>
+                            <input type="text" name="subId" id="subId" class="form-control" formControlName="subId" autocomplete="off"
+                                maxlength="9" (keypress)="isAlphaNumeric($event)">
+                        </div>
+
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" name="firstName" id="firstName" class="form-control" autocomplete="off"
+                                formControlName="firstName" (keypress)="isAlphaOnly($event)">
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" name="lastName" id="lastName" class="form-control" autocomplete="off"
+                                formControlName="lastName" (keypress)="isAlphaOnly($event)">
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="dob">DOB:</label>
+                            <input type="text" name="dob" id="dob" class="form-control" formControlName="dob" autocomplete="off"
+                                placeholder="YYYY-MM-DD" (keypress)="validateVal($event)"
+                                (keyup)="dobAddFormatter($event,'dob')" maxlength="10">
+                        </div>
+
+                    </div>
+                    <div class="form-group col-12 pt-2">
+
+                        <button class="btn btn-green" style="margin-right: 10px;" (click)="submit()">Submit</button>
+
+                        <!-- <button class="btn btn-green ml-4" (click)="cancel()">Cancel</button> -->
+
+                    </div>
+                </div>
+            </form>
+            <div class="col-12 pt-3 row" *ngIf="showGrid">
+                <div class="col-12 p-0">
+                    <div id="spinnerCust" *ngIf="loader">
+                        <div class="spinner-border text-muted" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <ag-grid-angular #agGrid style="height: 400px;" class="ag-theme-balham" [rowData]="rowData"
+                        [columnDefs]="columnDefs" [defaultColDef]="defaultColumnDef" rowSelection="single"
+                        (click)="getSelectedRows($event)" [enableCellTextSelection]="true">
+                    </ag-grid-angular>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

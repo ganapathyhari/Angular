@@ -1,0 +1,52 @@
+<form [formGroup]="homeForm" class="col-12">
+    <div class="row">
+        <div class="col-12 pt-8" style="display: block">
+            <p class="font-weight-bold heading"> Disc. Trend by TRC File Date</p>
+        </div>
+        <div class="col-6 pt-8" style="display: block;">
+            <canvas style="margin-top: 50px;" baseChart [chartType]="'bar'" [datasets]="chartData" [labels]="labels"
+                [options]="chartOptions" [legend]="true" [colors]="colors">
+            </canvas>
+        </div>
+        <div class=" pt-8" style="display: block;">
+            <ag-grid-angular #agGridReport style="height: 210px; margin-top:55px; width:22.1rem" class="ag-theme-balham"
+                [enableCellTextSelection]="true" [rowData]="rowDataReport" [columnDefs]="columnDefsReport">
+            </ag-grid-angular>
+        </div>
+        <div class="col-1 pt-10" style="margin-top: 246px;cursor: pointer;">
+            <i class="fa fa-download" aria-hidden="true" (click)="exportToExcel('Disc_Trend_Month')"></i>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-12 pt-10" style="display: block">
+            <p class="font-weight-bold heading">Daily 4Rx Submission Trend</p>
+        </div>
+        <div class="col-8 pt-8" style="display: block;">
+            <canvas style="margin-top: 50px;" baseChart [chartType]="'line'" [datasets]="chartLineData"
+                [labels]="labelsLine" [options]="chartOptions" [legend]="true">
+            </canvas>
+        </div>
+
+    </div>
+    <div class="row pt-5">
+        <div class="col-12 pt-10">
+            <p class="font-weight-bold heading">Productivity Dashboard</p>
+            <div class="form-group pt-4" style="padding-left:-15px">
+                <label for="reportMonth">TRC File Date:</label>
+                <select name="reportMonth" id="reportMonth" class="col-3 form-control" formControlName="reportMonth"
+                    (change)="filterProcessorList($event)">
+                    <option selected>Select</option>
+                    <option *ngFor="let reportMonth of monthList" [value]="reportMonth">
+                        {{reportMonth}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-7 ml-0" style="width: 28rem;">
+            <ag-grid-angular #agGridProductivity style="height: 200px; width: 28rem" class="ag-theme-balham"
+                [rowData]="rowDataMan" [columnDefs]="columnDefsMan" [enableCellTextSelection]="true"> </ag-grid-angular>
+        </div>
+        <div class="col-1 pt-10" style="margin-top: 182px; margin-left: -2.5rem; cursor: pointer;">
+            <i class="fa fa-download" aria-hidden="true" (click)="exportToExcel('Manager_Productivity')"></i>
+        </div>
+    </div>
+</form>

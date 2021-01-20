@@ -1,0 +1,51 @@
+<div class="col-12 row">
+    <div class="col-12 pt-5 m-auto">
+        <div class="rounded bg-white p-4 shadow shadow-md">
+            <div>
+                <form [formGroup]="discAnalyzerForm" class="row">
+                    <div class="form-group col-12 row" style="align-items: flex-end;">
+                        <p class="font-weight-bold heading col-12 pl-0 ml-3">Discrepancy Analyzer</p>
+                    </div>
+                </form>
+                <div class="col-9 pt-1 row">
+                    <div class="col-5 pt-3 p-0">
+                        <input type="file" class="form-control" (change)="addfile($event)" placeholder="Upload file"
+                            accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    </div>
+                    <div class="col-3 pt-3 pl-3">
+                        <button type="button" class="btn btn-green" (click)="addNew()"><i class="fa fa-plus"></i> Add
+                            New</button>
+                    </div>
+                </div>
+                <table class="table" *ngIf="fieldList.length != 0" style="width: 325px; margin-top: 20px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">Field Name</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of fieldList">
+                            <td>
+                                <input type="text" name="userName" id={{item.id}} class="form-control"
+                                    value={{item.fieldName}} disabled="true">
+                            </td>
+                            <td>
+                                <a class="edit" title="Edit" data-toggle="tooltip" (click)="update(item.id)"><i
+                                        class="material-icons">&#xE254;</i></a>
+                            </td>
+                            <td>
+                                <a class="delete" title="Delete" data-toggle="tooltip" (click)="onDeleteRow(item.id)"><i
+                                        class="material-icons">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                  <div class="form-group mt-4 ml-3">                   
+                    <button class="btn btn-green" (click)="save()">Save</button>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

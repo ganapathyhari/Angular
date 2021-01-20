@@ -1,0 +1,80 @@
+<div class="col-12 row ">
+    <div class="col-1"></div>
+    <div class="col-12 row pt-5 m-auto" style="max-width: 95%">
+        <div class="col-12">
+            <form [formGroup]="processorMgmtForm" class="col-12">
+                <div class="col-12 row bg-white p-4 shadow shadow-md rounded">
+                    <p class="font-weight-bold heading col-12 pl-0 ml-3">Processor Management</p>
+                    <div class="form-group col-12 row pt-4">
+                        <div *ngIf="errList.length != 0" class="form-group col-12">
+                            <p style="color: red" *ngFor="let err of errList">{{err}}
+                            </p>
+                        </div>
+                        <div class="form-group col-12">
+                            <p style="color:red" *ngIf="errorFlag">{{errorMessage}}</p>
+                            <p style="color: red" *ngFor="let err of processorErrorList">{{err}}</p>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="reconciliation">Reconciliation Type:</label>
+                            <select type="text" name="recon" id="recon" class="form-control"
+                                formControlName="reconcilation" (change)="disableClientContr()">
+                                <option value="" disabled>Select</option>                             
+                                <option *ngFor="let rtype of reconType" [value]="rtype.recon_Id">{{rtype.recon_Name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="processorName">Processor:</label>
+                            <select name="processorName" id="processorName" class="form-control"
+                                formControlName="processorName" (change)="onChangeProcessor()"
+                                [attr.disabled]="processorBool ? '' : null ">
+                                <option selected disabled value=''>Select</option>
+                                <option *ngFor="let processor of processorNameList" [value]="processor">
+                                    {{processor}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3" *ngIf="reconId !== '3'">
+                            <label for="reportMonth">Report Month:</label>
+                            <input type="text" name="reportMonth" id="reportMonth" class="form-control" disabled=true
+                                formControlName="reportMonth" placeholder="YYYY-MM">
+                        </div>
+                        <div class="form-group col-3" *ngIf="reconId === '3'">
+                            <label for="client">TRC File Date:</label>
+                            <select name="trcDate" id="trcDate" class="form-control" formControlName="trcDate" (change)="filterDiscrepancy()" [attr.disabled]="trcBool ? '' : null ">
+                                <option selected value="" disabled>Select</option>
+                                <option *ngFor="let trcDate of trcDateList" [value]="trcDate">
+                                    {{trcDate}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="agTable" class="col-12 ml-0 pt-8" style="display: block; padding-left:0rem" *ngIf="rowData.length>0">
+                        <ag-grid-angular #agGrid id="agGrid" style="width:48.4rem; max-height: 380px;" [style.height.px]="variableHeight" class="ag-theme-balham col-12"
+                            [rowData]="rowData" [columnDefs]="columnDefs" 
+                            (cellValueChanged)="onCellValueChanged($event)" rowSelection="multiple"
+                            rowMultiSelectWithClick="true" suppressRowClickSelection="true" suppressClickEdit="true"
+                            stopEditingWhenGridLosesFocus="false" (cellKeyPress)="keyPress($event)"
+                            [enableCellTextSelection]="true" (rowSelected)="getSelectedRows($event)"
+                            (cellClicked)="click($event)"  [enableColResize]='true'>
+                        </ag-grid-angular>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="col-4"></div>
+                        <div class="col-1"></div>
+                        <div class="col-2">
+                            <button class="btn btn-green" style="margin-top: 10px;"
+                                (click)="assign('U')">UnAssign</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="spinnerCust" *ngIf="loader">
+                    <div class="spinner-border text-muted" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>

@@ -1,0 +1,114 @@
+<div class="col-12 row ">
+    <div class="col-1"></div>
+    <div class="col-12 row pt-5 m-auto" style="max-width: 95%">
+        <div class="col-12">
+            <form [formGroup]="assignForm" class="col-12">
+                <div class="col-12 row bg-white p-4 shadow shadow-md rounded">
+                    <p class="font-weight-bold heading col-12 pl-0 ml-3">Manager Assign</p>
+                    <div class="form-group col-12 row pt-4">
+                        <div *ngIf="errList.length != 0" class="form-group col-12">
+                            <p style="color: red" *ngFor="let err of errList">{{err}}
+                            </p>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="reconciliation">Reconciliation Type:</label>
+                            <select type="text" name="recon" id="recon" class="form-control" formControlName="reconcilation" (change)="disableClientContr()">
+                                <option value="" disabled>Select</option>
+                                <!-- <option value="1" >1</option>
+                                <option value="3" >3</option> -->
+                                <option *ngFor="let rtype of reconType" [value]="rtype.recon_Id">{{rtype.recon_Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="client">Client:</label>
+                            <select name="client" id="client" class="form-control" formControlName="client" (change)="getContractVal($event)" [attr.disabled]="clientBool ? '' : null ">
+                                <option selected value="" disabled>Select</option>
+                                <option *ngFor="let client of clientList" [value]="client">
+                                    {{client}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="contract">Contract:</label>
+                            <select name="contract" id="contract" class="form-control" formControlName="contract" (change)="onChangeContract()" [attr.disabled]="contractBool ? '' : null">
+                                <option selected value="" disabled>Select</option>
+                                <option *ngFor="let contract of contractList" [value]="contract">
+                                    {{contract}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3" *ngIf="reconId !== '3'">
+                            <label for="reportMonth">Report Month:</label>
+                            <input type="text" name="reportMonth" id="reportMonth" class="form-control" disabled=true formControlName="reportMonth" placeholder="YYYY-MM">
+                        </div>
+                        <div class="form-group col-3" *ngIf="reconId === '3'">
+                            <label for="client">TRC File:</label>
+                            <select name="trcDate" id="trcDate" class="form-control" formControlName="trcDate" (change)="get4RXDiscrepancy()" [attr.disabled]="trcBool ? '' : null ">
+                                <option selected value="" disabled>Select</option>
+                                <option *ngFor="let trcDate of trcDateList" [value]="trcDate">
+                                    {{trcDate}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="unassigntotal">Unassigned Total:</label>
+                            <input type="text" name="unassigntotal" id="unassigntotal" class="form-control" disabled=true formControlName="unAssignTotal">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 row bg-white p-4 mt-2 shadow shadow-md rounded">
+                    <div class="form-group col-12">
+                        <p style="color: red" *ngIf="discpErrorMessage!=''">{{discpErrorMessage}}</p>
+                        <p style="color:red" *ngIf="errorFlag">{{errorMessage}}</p>
+                        <p style="color: red"  *ngFor="let err of processorErrorList">{{err}}</p>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="processorName">Processor:</label>
+                            <select name="processorName" id="processorName" class="form-control" formControlName="processorName" (change)="updateAssignedCount($event)">
+                                <option selected disabled value=''>Select</option>
+                                <option *ngFor="let processor of processorNameList" [value]="processor.processor_Id">
+                                    {{processor.processor_Name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="tottd">Total To Do:</label>
+                            <input type="text" name="tottd" id="tottd" class="form-control" disabled=true formControlName="totalToDo">
+
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="qty">Quantity:</label>
+                            <select name="qty" id="qty" class="form-control" formControlName="quantity" [ngClass]="{'error-message':errorFlag}" (change)="checkForOther($event)">
+                                <option selected disabled value=''>Select</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="75">75</option>
+                                <option value="100">100</option>
+                                <option value="all">All</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div *ngIf='otherFlag' class="form-group col-3" style="margin-top: 34px;">
+                            <input type="text" name="other" id="other" class="form-control" [disabled]=false formControlName="other" (keypress)="validateVal($event)"
+                                maxlength="5" autocomplete="off">
+                        </div>
+
+                    </div>
+                    <ag-grid-angular *ngIf="rowData.length>0" #agGrid style="height: 300px;width:633px; margin-left: 15px" class="ag-theme-balham"
+                        [rowData]="rowData" [columnDefs]="columnDefs" [rowSelection]="rowSelection" rowMultiSelectWithClick="true">
+                    </ag-grid-angular>
+                    <div class="form-group col-12">
+                        <button class="btn btn-green" style="margin-top: 10px;" (click)="assign()">Assign</button>
+                    </div>
+                </div>
+
+                <div id="spinnerCust" *ngIf="loader">
+                    <div class="spinner-border text-muted" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>

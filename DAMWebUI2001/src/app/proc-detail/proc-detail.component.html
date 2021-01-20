@@ -1,0 +1,227 @@
+<div class="col-12 row">
+    <div class="col-12 pt-5 m-auto" style="max-width: 95%;">
+        <h3 style="color:green" *ngIf="message!=''">{{message}}</h3>
+        <form [formGroup]="procDetailForm" class="col-12 row">
+            <div class="col-12 rounded bg-white p-4 shadow shadow-md">
+                <p class="font-weight-bold heading col-12 pl-0 ml-1">Processor Discrepancy List</p>
+                <div class="form-group col-12 row pt-4">
+                    <div *ngIf="errList.length != 0" class="form-group col-12">
+                        <p style="color: red" *ngFor="let err of errList">{{err}}
+                        </p>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" name="firstName" id="firstName" formControlName="firstName"
+                            class="form-control" disabled>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" name="lastName" id="lastName" formControlName="lastName" class="form-control"
+                            disabled>
+                    </div>
+                    <div class="form-group col-3" *ngIf="reconID!=='3'">
+                        <label for="dob">DOB:</label>
+                        <input type="text" name="dob" id="dob" formControlName="dob" class="form-control" disabled>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="mbi">MBI:</label>
+                        <input type="text" name="mbi" id="mbi" formControlName="mbi" class="form-control" disabled>
+                    </div>
+                    <!-- <div class="form-group col-3" *ngIf="reconID==='3'">
+                        <label for="subId">Sub ID:</label>
+                        <input type="text" name="subId" id="subId" formControlName="subId" class="form-control"
+                            disabled>
+                    </div> -->
+                </div>
+                <div class="form-group col-12 row">
+                    <div class="form-group col-3" *ngIf="reconID!=='3'">
+                        <label for="gender">Gender:</label>
+                        <input type="text" name="gender" id="gender" formControlName="gender" class="form-control"
+                            disabled>
+                    </div>
+                    <div class="form-group col-3" *ngIf="reconID==='2'">
+                        <label for="groupId">Group Id:</label>
+                        <input type="text" name="groupId" id="groupId" formControlName="groupId" class="form-control"
+                            disabled>
+                    </div>
+                    <div class="form-group col-3" *ngIf="reconID!=='3'">
+                        <label for="subId">Sub ID:</label>
+                        <input type="text" name="subId" id="subId" formControlName="subId" class="form-control"
+                            disabled>
+                    </div>
+                    <div class="form-group col-3" *ngIf="reconID!=='3'">
+                        <label for="discrepancyCode">Discrepancy Code:</label>
+                        <input type="text" name="discrepancyCode" id="discrepancyCode" formControlName="discCode"
+                            class="form-control" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 rounded bg-white p-4 mt-2 shadow shadow-md">
+                <div *ngIf="reconID!=='3'">
+                    <div class="form-group col-12 row pt-3">
+                        <div class="form-group col-3">
+                            <label for="contr">Client ID:</label>
+                            <input type="text" name="clientId" id="clientId" formControlName="clientId"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="contract">Contract:</label>
+                            <input type="text" name="contract" id="contract" formControlName="contract"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="segment">Segment:</label>
+                            <input type="text" name="segment" id="segment" formControlName="segment"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="pbp">PBP:</label>
+                            <input type="text" name="pbp" id="pbp" formControlName="pbp" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="cmsValue">CMS Value:</label>
+                            <input type="text" name="cmsValue" id="cmsValue" formControlName="cmsValue"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="planValue">Plan Value:</label>
+                            <input type="text" name="planValue" id="planValue" formControlName="planValue"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="months">Months:</label>
+                            <input type="text" name="months" id="months" formControlName="months" class="form-control"
+                                disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="description">Description:</label>
+                            <input type="text" name="description" id="description" formControlName="description"
+                                class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="aged">Aged:</label>
+                            <input type="text" name="aged" id="aged" formControlName="aged" class="form-control"
+                                disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="startDate">Disc Start Date:</label>
+                            <input type="text" name="startDate" id="startDate" formControlName="startDate"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="endDate">Disc End Date:</label>
+                            <input type="text" name="endDate" id="endDate" formControlName="endDate"
+                                class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="reconID==='3'">
+                    <div class="form-group col-12 row pt-4">
+                        <div class="form-group col-4">
+                            <label for="contr">Client ID:</label>
+                            <input type="text" name="clientId" id="clientId" formControlName="clientId"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="contract">Contract:</label>
+                            <input type="text" name="contract" id="contract" formControlName="contract"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="trcReceivedDate">TRC Received Date:</label>
+                            <input type="text" name="trcReceivedDate" id="trcReceivedDate"
+                                formControlName="trcReceivedDate" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-4">
+                            <label for="pbp">PBP:</label>
+                            <input type="text" name="pbp" id="pbp" formControlName="pbp" class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="cmsValue">Transaction Reply Code:</label>
+                            <input type="text" name="cmsValue" id="cmsValue" formControlName="cmsValue"
+                                class="form-control" disabled>
+                        </div>
+                        <!-- <div class="form-group col-3">
+                            <label for="groupId">Group ID:</label>
+                            <input type="text" name="groupId" id="groupId" formControlName="groupId"
+                                class="form-control" disabled>
+                        </div> -->
+                        <div class="form-group col-4">
+                            <label for="transDate">4R Transaction Date:</label>
+                            <input type="text" name="transDate" id="transDate" formControlName="transDate"
+                                class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <!-- <div class="form-group col-3">
+                            <label for="months">Member Status:</label>
+                            <input type="text" name="months" id="months" formControlName="months" class="form-control"
+                                disabled>
+                        </div> -->
+                        <div class="form-group col-4">
+                            <label for="cmsSubDate">CMS Submission Date :</label>
+                            <input type="text" name="cmsSubDate" id="cmsSubDate" formControlName="cmsSubDate"
+                                class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="trc205ReceivedDate">TRC 205 Received Date:</label>
+                            <input type="text" name="trc205ReceivedDate" id="trc205ReceivedDate"
+                                formControlName="trc205ReceivedDate" class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="enrollmentSource">Enrollment Source:</label>
+                            <input type="text" name="enrollmentSource" id="enrollmentSource"
+                                formControlName="enrollmentSource" class="form-control" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-12 row">
+                    <div class="form-group col-3">
+                        <label for="action">Action:</label>
+                        <select name="action" id="action" formControlName="action" class="form-control">
+                            <option selected value="" disabled>Select</option>
+                            <option *ngFor="let action of actionValues" [value]="action.param_value">
+                                {{action.param_value}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="reason">Reason:</label>
+                        <select name="reason" id="reason" formControlName="reason" class="form-control">
+                            <option selected value="">Select</option>
+                            <option *ngFor="let reason of reasonValues" [value]="reason.param_value">
+                                {{reason.param_value}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="status">Status:</label>
+                        <select class="form-control" id="status" name="status" formControlName="status">
+                            <option selected value="" disabled>Select</option>
+                            <option *ngFor="let status of statusValues" [value]="status.param_value">
+                                {{status.param_value}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <label for="notes">Notes:</label>
+                    <textarea type="text" maxlength="250" style="height: 100px;" name="notes" id="notes"
+                        formControlName="notes" class="form-control">
+                        </textarea>
+                </div>
+                <div class="form-group col-12 pt-2 row">
+                    <div class="col-3">
+                        <button class="btn btn-green mr-4" (click)="update()">Update</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-green" (click)="cancel()">Cancel</button></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

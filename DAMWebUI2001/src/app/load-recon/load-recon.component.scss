@@ -1,0 +1,38 @@
+.btn-primary{
+    background-color: black;
+    border-color:  black;
+    min-width: 125px;
+}
+
+.btn-green{
+    color: #fff;
+    background-color: #00ae42;
+    min-width: 125px;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.btn-date{
+    color: #ced4da;
+    border-color: #ced4da;    
+}
+.btn-green:hover {
+    background-color: #003aa1;
+}
+
+
+input#file-name.custom-file {
+    position: absolute;
+    width: 125px;
+    top: 32px;
+    right: 15px;
+    opacity: 0;
+    z-index: 2;
+}
+
+button#custom-file-btn {
+    position: absolute;
+    width: 125px;
+    top: 32px;
+    right: 15px;
+}
+

@@ -1,0 +1,71 @@
+<div class="col-12 row ">
+    <div class="col-1"></div>
+    <div class="col-12 row pt-5 m-auto" style="max-width: 95%">
+        <div class="col-12">
+            <form [formGroup]="exportReconForm" class="col-12">
+                <div class="col-12 row bg-white p-4 shadow shadow-md rounded">
+                    <p class="font-weight-bold heading col-12 pl-0 ml-3">Export Reconciliation</p>
+                    <div class="form-group col-12 pt-3 row ">
+                        <div *ngIf="errList.length != 0" class="form-group col-12  ">
+                            <p style="color: red" *ngFor="let err of errList">{{err}}
+                            </p>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="reconciliation">Reconciliation Type:</label>
+                            <select type="text" name="recon" id="recon" class="form-control"
+                                formControlName="reconcilation" (change)="disableClientContr()">
+                                <option value="" disabled>Select</option>                                
+                                <option *ngFor="let rtype of reconType" [value]="rtype.recon_Id">{{rtype.recon_Name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="clientId">Client:</label>
+                            <select name="clientId" id="clientId" class="form-control" formControlName="clientId"
+                                (change)="getContractVal($event)" [attr.disabled]="clientBool ? '' : null ">
+                                <option selected value="" disabled>Select</option>                                                   
+                                <option *ngFor="let client of clientList" [value]="client">
+                                    {{client}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row pt-3">
+                        <div class="form-group col-3">
+                            <label for="contract">Contract:</label>
+                            <select name="contract" id="contract" class="form-control" formControlName="contract"
+                            (change)="getReportMonthValue()"
+                                [attr.disabled]="contractBool ? '' : null">
+                                <option selected value="" disabled>Select</option>
+                                <option *ngIf="contractList.length != 0" value="ALL">ALL</option>                                        
+                                <option *ngFor="let contract of contractList" [value]="contract">
+                                    {{contract}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="reportMonth">Report Month:</label>
+                            <select name="reportMonth" id="reportMonth" class="form-control" 
+                            formControlName="reportMonth"  [attr.disabled]="monthBool ? '' : null ">
+                                <option value="" disabled>Select</option>
+                                <option *ngFor="let reportMonth of monthList" [value]="reportMonth">
+                                    {{reportMonth}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 pt-2">
+                        <button class="btn btn-green mr-5 ml-5" (click)="export()">Export</button>
+                        <button class="btn btn-green ml-4" (click)="reset()">Reset</button>
+                    </div>
+                    <div class="form-group col-12 pt-8 row" style=" margin-left: 1px;">
+                        <p *ngIf="fileText !==''" class="font-weight-bold ml-2">{{fileText}}</p>
+                    </div>
+                    <div id="spinnerCust" *ngIf="commonService.isExport">
+                        <div class="spinner-border text-muted" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>
