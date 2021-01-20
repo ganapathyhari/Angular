@@ -1,0 +1,108 @@
+<div class="col-12 row ">
+    <div class="col-1"></div>
+    <div class="col-12 row pt-5 m-auto" style="max-width: 95%">
+        <div class="col-12">
+            <form [formGroup]="adminForm" class="col-12">
+                <div class="col-12 row bg-white p-4 shadow shadow-md rounded">
+                    <p class="font-weight-bold heading col-12 pl-0 ml-3">User Management</p>
+
+                    <div class="form-group col-12 row pt-3">
+                        <div *ngIf="errorList.length != 0" class="form-group col-12  pt-3">
+                            <p style="color: red" *ngFor="let error of errorList">{{error}}
+                            </p>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="userId">User Name:</label>
+                            <select type="text" name="userName" id="userName" class="form-control"
+                                formControlName="userName" (change)="changeUser($event)">
+                                <option value="" disabled>Select</option>
+                                <option value="NEW" class="option-new">------NEW------</option>
+                                <option *ngFor="let user of userList" [value]="user.user_Name">{{user.user_Name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3" *ngIf='isAdd'>
+                            <label for="userId">Enter User Name:</label>
+                            <input type="text" name="newUser" id="newUser" class="form-control" [disabled]=false autocomplete="true"
+                                formControlName="newUser">
+                            <label style="color: #721c24" *ngIf="errorFlag">{{errorMessage}}</label>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="effDate">Effective Date:</label>
+                            <div class="input-group">
+                                <input name="effDate" id="effDate" class="form-control" formControlName="effDate"
+                                    (keyup)="dobAddFormatter($event)" (keypress)="restrict($event)" maxlength="10"
+                                    [disabled]="!isAdd" placeholder="YYYY-MM-DD" ngbDatepicker #effDate="ngbDatepicker"
+                                    [minDate]="minDateVal">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" [attr.disabled]="!isAdd ? '' : null"
+                                        (click)="effDate.toggle()" type="button">
+                                        <i class="fa fa-calendar"
+                                            style="width: 0.85 rem; height: 0.5rem; cursor: pointer;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="userName">User Id:</label>
+                            <input type="text" name="userName" id="userName" class="form-control" autocomplete="true"
+                                formControlName="userId" [attr.disabled]="!isAdd ? '' : null">
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="termDate">Termination Date:</label>
+                            <div class="input-group">
+                                <input cname="termDate" id="termDate" class="form-control" formControlName="termDate"
+                                    (keyup)="dobAddFormatter($event)" (keypress)="restrict($event)" maxlength="10"
+                                    (change)="onUpdateValue($event)" [attr.disabled]="termFlag ? '' : null"
+                                    placeholder="YYYY-MM-DD" ngbDatepicker #termDate="ngbDatepicker"
+                                    [minDate]="minDateTermVal"  autocomplete="off">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" (click)="termDate.toggle()" type="button"
+                                        [attr.disabled]="termFlag ? '' : null">
+                                        <i class="fa fa-calendar"
+                                            style="width: 0.85 rem; height: 0.5rem; cursor: pointer;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 row">
+                        <div class="form-group col-3">
+                            <label for="userRole">User Role:</label>
+                            <select type="text" name="userRole" id="userRole" class="form-control"
+                                formControlName="userRole" [attr.disabled]="!roleFlag ? '' : null"
+                                (change)="onUpdateValue($event)">
+                                <option value="" disabled>Select</option>
+                                <option *ngFor="let role of roleList" [value]="role">{{role}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="effInd">Active Indicator:</label>
+                            <select type="text" name="actInd" id="actInd" class="form-control" formControlName="actInd"
+                                [attr.disabled]="!indFlag ? '' : null" (change)="onUpdateValue($event)">
+                                <option value="" disabled>Select</option>
+                                <option value="Y">Y</option>
+                                <option value="N">N</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 row">
+                        <div class="col-1"></div>
+                        <div class="col-2">
+                            <button *ngIf="isAdd" class="btn btn-green" (click)="addUser()">Add</button>
+                            <button *ngIf="!isAdd" class="btn btn-green" (click)="updateUser()">Update</button>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-green" (click)="cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>
